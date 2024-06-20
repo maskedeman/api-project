@@ -67,4 +67,4 @@ You can run the project in two modes:
 
 ## API-Testing
 
-- Postman collections along with environment are available in postman-collection folder for convenience .
+- Postman collections along with environment are available in postman-collection folder for convenience. Change the environment to the given environment - "beta" and also change the baseURL accordingly or you can configure the environment as per your convenience.

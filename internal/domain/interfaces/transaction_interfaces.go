@@ -15,12 +15,12 @@ type TransactionUsecase interface {
 type TransactionRepository interface {
 	Deposit(transaction models.UserBalance) (*uint, error)
 	Withdraw(transaction models.UserBalance) (*uint, error)
-	// GetBalance(userID uint) (*models.UserBalance, error)
+
 	Transfer(transaction presenters.TransferRequest) (*models.UserBalance, error)
 
 	GetTransactionByID(id uint) (*models.UserBalance, error)
-	GetTransactionsByUserID(userID uint) ([]models.UserBalance, error)
-	GetTransactionsByUserIDAndTransactionType(userID uint, transactionType string) ([]models.UserBalance, error)
+	// GetTransactionsByUserID(userID uint) ([]models.UserBalance, error)
+	// GetTransactionsByUserIDAndTransactionType(userID uint, transactionType string) ([]models.UserBalance, error)
 	GetAmountByUserID(userID uint) (uint, error)
 	GetTransactionLogsByUserID(userID uint) (*models.TransactionLog, error)
 }

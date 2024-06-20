@@ -9,7 +9,15 @@ import (
 	enTranslations "github.com/go-playground/validator/v10/translations/en"
 )
 
+/*
+InitTranslator initializes the validator and translator instances for the application. It returns the validator and translator instances.
+The validator instance is used to validate request payloads, while the translator instance is used to translate validation errors into
+the desired language.
+
+The default language is English.
+*/
 func InitTranslator() (*validator.Validate, ut.Translator) {
+
 	// Create a new validator instance
 	validate := validator.New()
 
@@ -28,7 +36,9 @@ func InitTranslator() (*validator.Validate, ut.Translator) {
 	// Return the validator and translator instances
 	return validate, trans
 }
+
 func TranslateError(validationErrs validator.ValidationErrors, trans ut.Translator) map[string]string {
+
 	// Create an empty map to store field names as key and their translated error messages as value
 	err_map := make(map[string]string)
 

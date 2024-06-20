@@ -5,10 +5,12 @@ import (
 )
 
 func (uCase *usecase) Deposit(data models.UserBalance) (*uint, map[string]string) {
+
 	var err error
 	var curBalance *uint
 	errMap := make(map[string]string)
 
+	// Check if the user exists
 	_, err = uCase.authRepo.GetUserByID(data.UserID)
 	if err != nil {
 		errMap["userID"] = err.Error()

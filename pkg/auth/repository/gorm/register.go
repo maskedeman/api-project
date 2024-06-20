@@ -6,7 +6,7 @@ import (
 )
 
 /*
-RegisterUser persists a new user to the database and assigns a default role.
+RegisterUser persists a new user to the database.
 
 Parameters:
   - user: The user model containing registration information related to the user.

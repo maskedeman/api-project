@@ -20,6 +20,7 @@ Returns:
   - error: An error, if any occurred during the handling of the request.
 */
 func (handler *handler) GenerateAccessFromRefreshHandler() fiber.Handler {
+
 	// Initialize an error map to store potential errors during request handling
 	errMap := make(map[string]string)
 

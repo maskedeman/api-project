@@ -16,9 +16,6 @@ type AuthUsecase interface {
 	GenerateAccessFromRefreshUsecase(user *presenters.AccessTokenRequest) (presenters.NewAccessTokenResponse, map[string]string)
 
 	RegisterUser(request presenters.UserCreateRequest) map[string]string
-
-	// ForgotPassword(request presenters.ForgotPasswordRequest) error
-	// ResetPassword(request presenters.ResetPasswordRequest) map[string]string
 }
 
 /*
@@ -33,6 +30,4 @@ type AuthRepository interface {
 	GetUserByID(id uint) (*presenters.UserResponse, error)
 	GetUserByEmail(email string) (*presenters.UserResponse, error)
 	GetUserByPhone(phone uint) (*presenters.UserResponse, error)
-	// ForgotPassword(request presenters.ForgotPasswordRequest) error
-	// ResetPassword(request presenters.ResetPasswordRequest) error
 }

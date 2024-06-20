@@ -17,6 +17,7 @@ func (handler *handler) Withdraw() fiber.Handler {
 		var curBalance *uint
 
 		requestBody.UserID = c.Locals("requester").(uint)
+
 		// Parse and validate the request json body
 		err := c.BodyParser(&requestBody)
 		if err != nil {

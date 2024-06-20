@@ -21,9 +21,11 @@ Returns:
   - An error, if any, encountered during the connection process.
 */
 func ConnectRedis() (*redis.Client, error) {
+
 	// Create a redis client instance
 	redisClient := redis.NewClient(&redis.Options{
 		Addr: viper.GetString(`redis.address`),
+
 		//Password: viper.GetString(`redis.password`),
 		//DB: viper.GetInt(`redis.database`),
 	})

@@ -60,13 +60,16 @@ func (uCase *usecase) RegisterUser(request presenters.UserCreateRequest) map[str
 		UserID: *uID,
 		Amount: request.InitialDeposit,
 	}); err != nil {
+
 		// If deposit fails, undo user registration
 		undoErr := uCase.repo.DeleteUser(uID)
+
 		if undoErr != nil {
 			errMap["error"] = fmt.Sprintf("failed to deposit and undo user registration: %v, %v", err, undoErr)
 		} else {
 			errMap["error"] = fmt.Sprintf("failed to deposit and user registration has been undone: %v", err)
 		}
+
 		return errMap
 	}
 

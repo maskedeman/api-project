@@ -18,10 +18,12 @@ func (r *repository) Transfer(data presenters.TransferRequest) (*models.UserBala
 		return nil, err
 	}
 
+	// Check if the user has enough balance to transfer
 	if fromIntialAmount < data.Amount {
 		return nil, fmt.Errorf("insufficient balance; available balance: %d", fromIntialAmount)
 	}
 
+	// Calculate the remaining balance after the transfer in the From user
 	fromFinalAmount = fromIntialAmount - data.Amount
 
 	toIntialAmount, err := r.GetAmountByUserID(data.To)
@@ -29,6 +31,7 @@ func (r *repository) Transfer(data presenters.TransferRequest) (*models.UserBala
 		return nil, err
 	}
 
+	// Calculate the remaining balance after the transfer in the To user
 	toFinalAmount = toIntialAmount + data.Amount
 
 	// Update the balance of the From user
@@ -43,10 +46,11 @@ func (r *repository) Transfer(data presenters.TransferRequest) (*models.UserBala
 		return nil, err
 	}
 
+	// Create a transaction log for the transfer in the From user
 	if err := r.db.Create(&models.TransactionLog{
-		// TransactionID:     data.ID,
 		UserID:            data.From,
 		TransactionType:   "Transfer-Debit(-)",
+		TransactionBy:     "Self",
 		TransactionAmount: data.Amount,
 		RemainingAmount:   fromFinalAmount,
 	}).Error; err != nil {
@@ -54,10 +58,11 @@ func (r *repository) Transfer(data presenters.TransferRequest) (*models.UserBala
 		return nil, err
 	}
 
+	// Create a transaction log for the transfer in the To user
 	if err := r.db.Create(&models.TransactionLog{
-		// TransactionID:     data.ID,
 		UserID:            data.To,
 		TransactionType:   "Transfer-Credit(+)",
+		TransactionBy:     fmt.Sprintf("%d", data.From),
 		TransactionAmount: data.Amount,
 		RemainingAmount:   toFinalAmount,
 	}).Error; err != nil {

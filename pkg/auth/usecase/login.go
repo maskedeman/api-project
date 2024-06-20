@@ -45,11 +45,6 @@ func (uCase *usecase) LoginUsecase(c *fiber.Ctx, user *presenters.LoginRequest) 
 		return response, errMap
 	}
 
-	// errMap = utils.ValidateAccess(c.Get("Origin"), result.RoleID)
-	// if len(errMap) != 0 {
-	// 	return response, errMap
-	// }
-
 	// Check if the provided password matches the stored hashed password
 	if !utils.CheckPasswordHash(user.Password, result.Password) {
 		errMap := make(map[string]string)

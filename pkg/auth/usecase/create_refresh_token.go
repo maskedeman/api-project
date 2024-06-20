@@ -59,6 +59,7 @@ func (uCase *usecase) CreateRefreshToken(userID uint, username string) (string, 
 
 	// Store the generated refresh token in Redis
 	refresh_key := "refresh_" + username
+
 	config.SetToRedis(uCase.redisClient, refresh_key, refresh_token)
 
 	return refresh_token, err

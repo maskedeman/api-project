@@ -1,5 +1,7 @@
 package utils
 
+//It was before adding validation while declaring the struct
+
 // // IsValidEmail checks if the given string data is a valid email string.
 // func IsValidEmail(email string) bool {
 // 	_, err := mail.ParseAddress(email)

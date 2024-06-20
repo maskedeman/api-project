@@ -30,6 +30,7 @@ func NewFiberConfig() fiber.Config {
 
 	return conf
 }
+
 func CompressResponseConfig() compress.Config {
 	return compress.Config{
 		Level: compress.LevelBestCompression,
@@ -43,6 +44,7 @@ func LoggerConfig() logger.Config {
 		TimeZone:   "Asia/Kathmandu",
 	}
 }
+
 func CorsConfig() cors.Config {
 	return cors.Config{
 		AllowHeaders:     "Origin,Content-Type,Accept,Content-Length,Accept-Language,Accept-Encoding,Connection,Access-Control-Allow-Origin",

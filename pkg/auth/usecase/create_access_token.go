@@ -57,6 +57,7 @@ func (uCase *usecase) CreateAccessToken(userID uint, username string) (string, e
 
 	// Store the generated access token in Redis
 	access_key := "access_" + username
+
 	config.SetToRedis(uCase.redisClient, access_key, access_token)
 
 	return access_token, err

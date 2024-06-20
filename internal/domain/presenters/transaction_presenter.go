@@ -19,6 +19,6 @@ type TransferResponse struct {
 }
 
 type BalanceResponse struct {
-	UserID         uint `json:"user_id"`
-	CurrentBalance uint `json:"current_balance"`
+	User           interface{} `json:"user"`
+	CurrentBalance uint        `json:"current_balance"`
 }

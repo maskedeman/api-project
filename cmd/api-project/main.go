@@ -55,10 +55,6 @@ func main() {
 		log.Println("[+] Success: Connection to database successful [+]")
 	}
 
-	// // Create a new Fiber app with the configuration specified in config.NewFiberConf()
-	// server.App = fiber.New(config.NewFiberConfig())
-	// app := server.App
-
 	// Logger middleware with configuration specified in logger.Config{} to log requests to the server
 	app.Use(logger.New(logger.Config{
 		Format: "[${ip}]:${port} ${time} ${status} - ${method} ${path} ${time}\n",
@@ -78,12 +74,13 @@ func main() {
 	jwtMW := middleware.ValidateJWT(server.DB, server.RedisClient, jwtWare.Config{})
 
 	/* authRoute is a Fiber.Router group created under the "/auth/" path, to which authentication
-	-related routes will be added */
+	related routes will be added */
 	authRoute := app.Group("/auth/")
 
 	/* protectedRoutes is a Fiber.Router group created under the "/api/" path, to which other
 	private routes will be added */
 	protectedRoutes := server.App.Group("/api/", authMW, jwtMW)
+
 	// Initialize auth repository and usecase
 	authRepo := _authRepo.New(server.DB)
 

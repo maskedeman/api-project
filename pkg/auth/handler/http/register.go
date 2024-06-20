@@ -2,8 +2,8 @@ package http
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
+	"strconv"
 
 	"api-project/internal/domain/presenters"
 
@@ -32,6 +32,12 @@ func (handler *handler) RegisterUser() fiber.Handler {
 			return c.Status(http.StatusBadRequest).JSON(presenters.ErrorResponse(errMap))
 		}
 
+		phoneStr := strconv.FormatUint(uint64(requestBody.Phone), 10)
+		if len(phoneStr) != 10 {
+			errMap["error"] = "Phone number must be 10 digits"
+			return c.Status(http.StatusBadRequest).JSON(presenters.ErrorResponse(errMap))
+		}
+
 		validate, trans := utils.InitTranslator()
 
 		err = validate.Struct(requestBody)
@@ -53,7 +59,7 @@ func (handler *handler) RegisterUser() fiber.Handler {
 			errMap["error"] = err.Error()
 			return c.Status(http.StatusBadRequest).JSON(presenters.ErrorResponse(errMap))
 		}
-		fmt.Printf("user: %v\n", requestBody.InitialDeposit)
+
 		errMap = handler.usecase.RegisterUser(requestBody)
 		if len(errMap) > 0 {
 			return c.Status(http.StatusBadRequest).JSON(presenters.ErrorResponse(errMap))

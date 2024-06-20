@@ -8,7 +8,8 @@ func (uCase *usecase) GetBalance(userID uint) (*presenters.BalanceResponse, map[
 	var err error
 	errMap := make(map[string]string)
 
-	_, err = uCase.authRepo.GetUserByID(userID)
+	// Check if the user exists
+	usr, err := uCase.authRepo.GetUserByID(userID)
 	if err != nil {
 		errMap["userID"] = err.Error()
 		return nil, errMap
@@ -20,9 +21,13 @@ func (uCase *usecase) GetBalance(userID uint) (*presenters.BalanceResponse, map[
 		errMap["error"] = err.Error()
 		return nil, errMap
 	}
+	userData := make(map[string]interface{})
+	userData["id"] = usr.ID
+	userData["name"] = usr.Name
+	userData["phone"] = usr.Phone
 
 	return &presenters.BalanceResponse{
-		UserID:         userID,
+		User:           userData,
 		CurrentBalance: amount,
 	}, errMap
 }

@@ -24,5 +24,5 @@ type User struct {
 	Email           string           `json:"email" validate:"required,email" gorm:"unique"`
 	Phone           uint             `json:"phone" validate:"required" gorm:"unique" min:"10" max:"10"`
 	Password        string           `json:"password" validate:"required" min:"8" `
-	TransactionLogs []TransactionLog `gorm:"foreignKey:UserID"`
+	TransactionLogs []TransactionLog `gorm:"foreignKey:UserID"` //for one-many relationship
 }

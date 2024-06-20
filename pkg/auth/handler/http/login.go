@@ -13,11 +13,13 @@ import (
 
 // LoginHandler returns a Fiber.Handler function for handling login requests.
 func (handler *handler) LoginHandler() fiber.Handler {
+
 	// Initialize an empty map to store field names as key and their translated error messages as value
 	errMap := make(map[string]string)
 
 	// Define a Fiber.Handler function which will serve as the handler for processing login requests
 	return func(c *fiber.Ctx) error {
+
 		var requestBody presenters.LoginRequest
 
 		// Parse the JSON request body into an presenters.LoginRequest struct.

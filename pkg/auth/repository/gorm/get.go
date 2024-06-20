@@ -23,10 +23,12 @@ func (repo *repository) GetUserByID(id uint) (*presenters.UserResponse, error) {
 	var user presenters.UserResponse
 
 	if err := repo.db.Debug().Table("users").Where("id = ?", id).First(&user).Error; err != nil {
+
 		// If the user is not found, return a specific error message.
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, fmt.Errorf("user not found for id: '%d'", id)
 		}
+
 		// Return other database-related errors as-is
 		return nil, err
 	}
@@ -70,7 +72,7 @@ func (repo *repository) GetUserByPhone(phone uint) (*presenters.UserResponse, er
 
 	if err := repo.db.Debug().Table("users").Where("phone = ?", phone).First(&user).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return nil, fmt.Errorf("user not found for id: '%s'", phone)
+			return nil, fmt.Errorf("user not found for id: '%d'", phone)
 		}
 		return nil, err
 	}

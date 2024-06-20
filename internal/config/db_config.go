@@ -30,6 +30,7 @@ func dbConn(logger bool) *gorm.DB {
 		"%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		dbUser, dbPassword, dbHost, dbPort, dbName,
 	)
+
 	// establish a connection to the database using the dsn
 	db, err := gorm.Open(
 		mysql.Open(dsn), &gorm.Config{},

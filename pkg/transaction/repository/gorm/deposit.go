@@ -3,7 +3,6 @@ package gorm
 import (
 	"api-project/internal/domain/models"
 	"errors"
-	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -17,17 +16,21 @@ func (r *repository) Deposit(data models.UserBalance) (*uint, error) {
 	initialAmount, err := r.GetAmountByUserID(data.UserID)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
+
+			// If the user does not have any balance, set the initial amount to 0
 			initialAmount = 0
 		} else {
 			return nil, err
 		}
 	}
-	fmt.Printf("initialAmount: %v\n", initialAmount)
+
+	// Add the deposit amount to the user's current balance
 	finalAmount = data.Amount
 	finalAmount += initialAmount
-	fmt.Printf("finalAmount: %v\n", finalAmount)
+
 	if initialAmount == 0 {
-		fmt.Printf("----------------")
+
+		// If the user does not have any balance, create a new record
 		if err := r.db.Create(&models.UserBalance{
 			UserID: data.UserID,
 			Amount: finalAmount,
@@ -36,17 +39,19 @@ func (r *repository) Deposit(data models.UserBalance) (*uint, error) {
 			return nil, err
 		}
 	} else {
-		fmt.Printf("++++++++++++++++")
+
+		// Update the user's balance with the new amount
 		if err := r.db.Model(&models.UserBalance{}).Where("user_id = ?", data.UserID).UpdateColumn("amount", finalAmount).Error; err != nil {
 			tsx.Rollback()
 			return nil, err
 		}
 	}
 
+	// Create a transaction log for the deposit
 	if err := r.db.Create(&models.TransactionLog{
-		// TransactionID:     data.Timestamp.ID,
 		UserID:            data.UserID,
 		TransactionType:   "Deposit+",
+		TransactionBy:     "Self",
 		TransactionAmount: data.Amount,
 		RemainingAmount:   finalAmount,
 	}).Error; err != nil {

@@ -31,7 +31,7 @@ The project is configured via a `config.json` file. Here's a brief explanation o
 - `verbose`: Whether to run the server in verbose mode.
 - `logger`: Whether to enable logging.
 
-Adjust these settings as per the given config.json.example file.
+Adjust these settings as per the given config.json.example file. Make a new file config.json in internal/config and copy the contents of config.json.example file present in the same directory before running the project.
 
 ## Running the Project
 

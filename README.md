@@ -14,7 +14,11 @@ This project is a RESTful API built with Go using the Fiber framework. It uses M
     ```bash
     cd api-project
     ```
-3. Install dependencies:
+3. Initialize:
+    ```bash
+    go mod init api-project
+    ```
+4. Install dependencies:
     ```bash
     go mod tidy
     ```
